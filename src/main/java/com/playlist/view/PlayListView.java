@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class PlayListView {
     private final Scanner sc = new Scanner(System.in);
     private final SongController songController = new SongController();
+    ConsoleTable table = new ConsoleTable();
 
     // 일반 메시지 출력 메서드
     public void showMessage(String message) {
@@ -44,7 +45,7 @@ public class PlayListView {
         String artist = readMenu("아티스트 : ");
         Genre genre = readGenre("장르 : ");
 
-        boolean isSave = checkAnswer();
+        boolean isSave = checkAnswer("저장");
 
         if (isSave) {
             boolean isSuccess = songController.addSong(title, artist, genre);
@@ -69,7 +70,6 @@ public class PlayListView {
     }
 
     public void searchSong() {
-        ConsoleTable table = new ConsoleTable();
         int select = readInt("선택 : ");
 
         switch (select) {
@@ -83,15 +83,34 @@ public class PlayListView {
     }
 
     public void deleteSong() {
-        System.out.println();
-        System.out.println("======== 노래 삭제 ========");
+        while (true) {
+            System.out.println();
+            System.out.println("======== 노래 삭제 ========");
 
-        int select = readInt("삭제할 노래 ID : ");
-        songController.deleteSong(select);
+            int select = readInt("삭제할 노래 ID (0: 취소) : ");
+
+            if (select == 0) return;
+
+            if (songController.searchById(select).isEmpty()) {
+                System.out.println("삭제할 노래가 없습니다.");
+                continue;
+            }
+
+            table.showSongTable(songController.searchById(select));
+            System.out.println("정말 삭제하시겠습니까?");
+            boolean isDelete = checkAnswer("삭제");
+
+            if (isDelete) {
+                songController.deleteSong(select);
+                System.out.println("삭제되었습니다.");
+            }
+
+            return;
+        }
     }
 
-    public boolean checkAnswer() {
-        System.out.println("1. 저장        2. 취소");
+    public boolean checkAnswer(String promt) {
+        System.out.println("1. " + promt + "        2. 취소");
         int select = readInt("선택 : ");
 
         if (select == 1) {

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class SongRepository {
     private final List<Song> songs = new ArrayList<>();
+    private int nextId = 1;
 
     public SongRepository() { initializeSongs(); }
 
@@ -26,7 +27,7 @@ public class SongRepository {
     }
 
     public void save(Song song) {
-        song.setId(songs.size() + 1);
+        song.setId(nextId++);
         songs.add(song);
     }
 
@@ -44,6 +45,10 @@ public class SongRepository {
 
     public List<Song> findByGenre(Genre genre) {
         return findAll().stream().filter(song -> song.getGenre().equals(genre)).toList();
+    }
+
+    public List<Song> findById(int id) {
+        return findAll().stream().filter(song -> song.getId() == id).toList();
     }
 
     public void deleteSongById(int id) {
