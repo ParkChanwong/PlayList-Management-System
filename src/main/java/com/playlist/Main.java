@@ -13,8 +13,8 @@ public class Main {
             String select = playlistView.readMenu("선택 : ");
 
             switch (select) {
-                case "1" -> playlistView.addMenu();
-                case "2" -> System.out.println("sss");
+                case "1" -> playlistView.addSong();
+                case "2" -> playlistView.searchMainMenu();
                 case "3" -> System.out.println("3333");
                 case "4" -> System.out.println("4444");
                 case "0" -> {
