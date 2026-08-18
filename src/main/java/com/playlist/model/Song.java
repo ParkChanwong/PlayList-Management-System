@@ -14,8 +14,7 @@ public class Song {
     public Song() {}
 
     // 노래의 매개변수 생성자
-    public Song(int id, String title, String artist, Genre genre) {
-        this.id = id;
+    public Song(String title, String artist, Genre genre) {
         this.title = title;
         this.artist = artist;
         this.genre = genre;
