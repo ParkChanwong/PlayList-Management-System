@@ -31,6 +31,7 @@ public class SongController {
     public void modifySong() {
     }
 
-    public void deleteSong() {
+    public void deleteSong(int id) {
+        songRepository.deleteSongById(id);
     }
 }

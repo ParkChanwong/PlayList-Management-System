@@ -70,28 +70,49 @@ public class PlayListView {
 
     public void searchSong() {
         ConsoleTable table = new ConsoleTable();
-        String select = readMenu("선택 : ");
+        int select = readInt("선택 : ");
 
         switch (select) {
-            case "1" -> table.showSongTable(songController.searchAllSong());
-            case "2" -> table.showSongTable(songController.searchTitleSong(readMenu("노래명 : ")));
-            case "3" -> table.showSongTable(songController.searchArtistSong(readMenu("아티스트 : ")));
-            case "4" -> table.showSongTable(songController.searchGenre(readGenre("장르 : ")));
-            case "9" -> { return; }
+            case 1 -> table.showSongTable(songController.searchAllSong());
+            case 2 -> table.showSongTable(songController.searchTitleSong(readMenu("노래명 : ")));
+            case 3 -> table.showSongTable(songController.searchArtistSong(readMenu("아티스트 : ")));
+            case 4 -> table.showSongTable(songController.searchGenre(readGenre("장르 : ")));
+            case 9 -> { return; }
             default -> showError("메뉴에 있는 번호를 선택해주세요.");
         }
     }
 
+    public void deleteSong() {
+        System.out.println();
+        System.out.println("======== 노래 삭제 ========");
+
+        int select = readInt("삭제할 노래 ID : ");
+        songController.deleteSong(select);
+    }
+
     public boolean checkAnswer() {
         System.out.println("1. 저장        2. 취소");
-        String select = readMenu("선택 : ");
+        int select = readInt("선택 : ");
 
-        if (select.equals("1")) {
+        if (select == 1) {
             return true;
         }
 
         return false;
     }
+
+    public int readInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String num = sc.nextLine().trim();
+
+            try {
+                return Integer.parseInt(num);
+            } catch (NumberFormatException e) {
+                showError("숫자를 입력해주세요.");
+            }
+        }
+    };
 
     // 입력 값이 빈값인지 확인 메서드
     public String readMenu(String prompt) {
@@ -117,20 +138,14 @@ public class PlayListView {
         }
 
         while (true) {
-            String selectMenu = readMenu("선택 : ");
-            try {
-                int selectedNum = Integer.parseInt(selectMenu);
+            int selectMenu = readInt("선택 : ");
 
-                if (selectedNum < 1 || selectedNum > genres.length) {
-                    showError("1 ~ " + genres.length + " 사이의 번호를 입력해주세요.");
-                    continue;
-                }
-
-                return genres[selectedNum - 1];
-
-            } catch (NumberFormatException e) {
-                showError("숫자만 입력해주세요.");
+            if (selectMenu < 1 || selectMenu > genres.length) {
+                showError("1 ~ " + genres.length + " 사이의 번호를 입력해주세요.");
+                continue;
             }
+
+            return genres[selectMenu - 1];
         }
     }
 

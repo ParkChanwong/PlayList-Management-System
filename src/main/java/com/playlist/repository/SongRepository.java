@@ -45,4 +45,8 @@ public class SongRepository {
     public List<Song> findByGenre(Genre genre) {
         return findAll().stream().filter(song -> song.getGenre().equals(genre)).toList();
     }
+
+    public void deleteSongById(int id) {
+        songs.removeIf(song -> song.getId() == id);
+    }
 }
