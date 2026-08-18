@@ -110,22 +110,27 @@ public class PlayListView {
     public Genre readGenre(String prompt) {
         System.out.println(prompt);
 
-        Genre[] genre = Genre.values();
+        Genre[] genres = Genre.values();
 
-        for (int i = 0; i < genre.length; i++) {
-            System.out.println((i + 1) + ". " + genre[i].getDisplayName());
+        for (int i = 0; i < genres.length; i++) {
+            System.out.println((i + 1) + ". " + genres[i].getDisplayName());
         }
 
         while (true) {
             String selectMenu = readMenu("선택 : ");
-            int selectInt = Integer.parseInt(selectMenu);
+            try {
+                int selectedNum = Integer.parseInt(selectMenu);
 
-            if (selectInt < 1 || selectInt > genre.length) {
-                System.out.println("1 ~ " + genre.length + " 사이의 번호를 입력해주세요");
-                continue;
+                if (selectedNum < 1 || selectedNum > genres.length) {
+                    showError("1 ~ " + genres.length + " 사이의 번호를 입력해주세요.");
+                    continue;
+                }
+
+                return genres[selectedNum - 1];
+
+            } catch (NumberFormatException e) {
+                showError("숫자만 입력해주세요.");
             }
-
-            return Genre.values()[selectInt - 1];
         }
     }
 
