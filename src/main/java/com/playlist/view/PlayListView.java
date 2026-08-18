@@ -97,12 +97,47 @@ public class PlayListView {
             }
 
             table.showSongTable(songController.searchById(select));
+
             System.out.println("정말 삭제하시겠습니까?");
             boolean isDelete = checkAnswer("삭제");
 
             if (isDelete) {
                 songController.deleteSong(select);
                 System.out.println("삭제되었습니다.");
+            }
+
+            return;
+        }
+    }
+
+    public void updateSong() {
+        while (true) {
+            System.out.println();
+            System.out.println("======== 노래 수정 ========");
+
+            int select = readInt("수정할 노래 ID (0: 취소) : ");
+
+            if (select == 0) return;
+
+            List<Song> song = songController.searchById(select);
+
+            if (song.isEmpty()) {
+                System.out.println("수정할 노래가 없습니다.");
+                continue;
+            }
+
+            table.showSongTable(song);
+
+            String title = readMenu("노래명 : ");
+            String artist = readMenu("아티스트 : ");
+            Genre genre = readGenre("장르 : ");
+
+            System.out.println("정말 수정하시겠습니까?");
+            boolean isUpdate = checkAnswer("수정");
+
+            if (isUpdate) {
+                songController.updateSong(select, title, artist, genre);
+                System.out.println("수정이 완료되었습니다.");
             }
 
             return;
