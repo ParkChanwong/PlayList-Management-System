@@ -12,7 +12,8 @@ public enum Genre {
     CLASSICAL("클래식"),
     EDM("EDM"),
     INDIE("인디"),
-    K_POP("K-팝");
+    K_POP("K-팝"),
+    J_POP("J-팝");
     // 장르 Enum End
 
     // Enum 인자를 담는 필드 생성

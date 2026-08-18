@@ -4,6 +4,8 @@ import com.playlist.model.Genre;
 import com.playlist.model.Song;
 import com.playlist.repository.SongRepository;
 
+import java.util.List;
+
 public class SongController {
 
     SongRepository songRepository = new SongRepository();
@@ -21,8 +23,10 @@ public class SongController {
         return true;
     }
 
-    public void searchSong() {
-    }
+    public List<Song> searchAllSong() { return songRepository.findAll(); }
+    public List<Song> searchTitleSong(String title) { return songRepository.findByTitle(title); }
+    public List<Song> searchArtistSong(String artist) {return songRepository.findByArtist(artist); }
+    public List<Song> searchGenre(Genre genre) { return songRepository.findByGenre(genre); }
 
     public void modifySong() {
     }

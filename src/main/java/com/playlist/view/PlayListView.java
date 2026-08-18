@@ -2,7 +2,9 @@ package com.playlist.view;
 
 import com.playlist.controller.SongController;
 import com.playlist.model.Genre;
+import com.playlist.model.Song;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class PlayListView {
@@ -35,19 +37,60 @@ public class PlayListView {
         System.out.println("0. 프로그램 종료");
     }
 
-    public void addMenu() {
+    public void addSong() {
         System.out.println();
         System.out.println("======== 노래 추가 ========");
         String title = readMenu("제목 : ");
         String artist = readMenu("아티스트 : ");
         Genre genre = readGenre("장르 : ");
 
-        boolean isSuccess = songController.addSong(title, artist, genre);
-        if (isSuccess) {
-            showMessage("내 플레이리스트에 노래가 추가되었습니다.");
-        } else {
-            showError("같은 노래가 존재합니다. 다른 노래를 추가해주세요");
+        boolean isSave = checkAnswer();
+
+        if (isSave) {
+            boolean isSuccess = songController.addSong(title, artist, genre);
+            if (isSuccess) {
+                showMessage("내 플레이리스트에 노래가 추가되었습니다.");
+            } else {
+                showError("같은 노래가 존재합니다. 다른 노래를 추가해주세요");
+            }
+        } else return;
+    }
+
+    public void searchMainMenu() {
+        System.out.println();
+        System.out.println("======== 플레이리스트 조회 ========");
+        System.out.println("1. 전체 조회");
+        System.out.println("2. 노래명으로 조회");
+        System.out.println("3. 아티스트명으로 조회");
+        System.out.println("4. 장르별 조회");
+        System.out.println("9. 이전 메뉴로");
+
+        searchSong();
+    }
+
+    public void searchSong() {
+        ConsoleTable table = new ConsoleTable();
+        String select = readMenu("선택 : ");
+
+        switch (select) {
+            case "1" -> table.showSongTable(songController.searchAllSong());
+            case "2" -> table.showSongTable(songController.searchTitleSong(readMenu("노래명 : ")));
+            case "3" -> table.showSongTable(songController.searchArtistSong(readMenu("아티스트 : ")));
+            case "4" -> table.showSongTable(songController.searchGenre(readGenre("장르 : ")));
+            case "9" -> { return; }
+            default -> showError("메뉴에 있는 번호를 선택해주세요.");
         }
+    }
+
+    public boolean checkAnswer() {
+        System.out.println("1. 저장        2. 취소");
+        String select = readMenu("선택 : ");
+
+        if (select.equals("1")) {
+            return true;
+        }
+
+        return false;
     }
 
     // 입력 값이 빈값인지 확인 메서드
