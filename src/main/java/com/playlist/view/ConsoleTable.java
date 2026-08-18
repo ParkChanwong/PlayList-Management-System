@@ -26,9 +26,8 @@ public class ConsoleTable {
     }
 
     public void showSongTable(List<Song> songs) {
-        PlayListView playListView = new PlayListView();
         if (songs.isEmpty()) {
-            playListView.showMessage("검색된 노래가 없습니다.");
+            System.out.println("검색된 노래가 없습니다.");
             return;
         }
 

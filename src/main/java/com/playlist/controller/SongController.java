@@ -27,10 +27,17 @@ public class SongController {
     public List<Song> searchTitleSong(String title) { return songRepository.findByTitle(title); }
     public List<Song> searchArtistSong(String artist) {return songRepository.findByArtist(artist); }
     public List<Song> searchGenre(Genre genre) { return songRepository.findByGenre(genre); }
+    public List<Song> searchById(int id) { return songRepository.findById(id); }
 
     public void modifySong() {
     }
 
-    public void deleteSong() {
+    public boolean deleteSong(int id) {
+        if (searchAllSong().stream().anyMatch(song -> song.getId() == id)) {
+            songRepository.deleteSongById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

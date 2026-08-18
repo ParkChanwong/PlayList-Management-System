@@ -16,7 +16,7 @@ public class Main {
                 case "1" -> playlistView.addSong();
                 case "2" -> playlistView.searchMainMenu();
                 case "3" -> System.out.println("3333");
-                case "4" -> System.out.println("4444");
+                case "4" -> playlistView.deleteSong();
                 case "0" -> {
                     playlistView.showMessage("프로그램을 종료합니다.");
                     playlistView.exit();
