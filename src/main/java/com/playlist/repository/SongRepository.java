@@ -54,4 +54,12 @@ public class SongRepository {
     public void deleteSongById(int id) {
         songs.removeIf(song -> song.getId() == id);
     }
+
+    public void updateSongById(int id, String title, String artist, Genre genre) {
+        List<Song> song = findById(id);
+
+        song.get(0).setTitle(title);
+        song.get(0).setArtist(artist);
+        song.get(0).setGenre(genre);
+    }
 }
