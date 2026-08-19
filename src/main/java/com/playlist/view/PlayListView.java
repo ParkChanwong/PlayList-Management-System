@@ -46,13 +46,12 @@ public class PlayListView {
         Genre genre = readGenre("장르 : ");
 
         boolean isSave = checkAnswer("저장");
+        boolean isNotDuplicate = duplicateSong(title, artist, genre);
 
         if (isSave) {
-            boolean isSuccess = songController.addSong(title, artist, genre);
-            if (isSuccess) {
+            if (isNotDuplicate) {
+                songController.addSong(title, artist, genre);
                 showMessage("내 플레이리스트에 노래가 추가되었습니다.");
-            } else {
-                showError("같은 노래가 존재합니다. 다른 노래를 추가해주세요");
             }
         } else return;
     }
@@ -134,10 +133,13 @@ public class PlayListView {
 
             System.out.println("정말 수정하시겠습니까?");
             boolean isUpdate = checkAnswer("수정");
+            boolean isNotDuplicate = duplicateSong(title, artist, genre);
 
             if (isUpdate) {
-                songController.updateSong(select, title, artist, genre);
-                System.out.println("수정이 완료되었습니다.");
+                if (isNotDuplicate) {
+                    songController.updateSong(select, title, artist, genre);
+                    System.out.println("수정이 완료되었습니다.");
+                }
             }
 
             return;
@@ -153,6 +155,17 @@ public class PlayListView {
         }
 
         return false;
+    }
+
+    public boolean duplicateSong(String title, String artist, Genre genre) {
+        boolean isSameSong = songController.searchAllSong().stream().anyMatch(song -> song.getTitle().equals(title) && song.getArtist().equals(artist) && song.getGenre().equals(genre));
+
+        if (isSameSong) {
+            System.out.println("내 플레이리스트에 등록된 노래입니다.");
+            return false;
+        }
+
+        return true;
     }
 
     public int readInt(String prompt) {
