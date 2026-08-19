@@ -1,8 +1,9 @@
 package com.playlist.model;
 
-// 노래 장르
+/**
+ * 프로그램에서 선택할 수 있는 노래 장르와 화면 표시명을 관리한다.
+ */
 public enum Genre {
-    // 장르 Enum List Start
     POP("팝송"),
     ROCK("락"),
     HIP_HOP("힙합"),
@@ -14,17 +15,15 @@ public enum Genre {
     INDIE("인디"),
     K_POP("K-팝"),
     J_POP("J-팝");
-    // 장르 Enum End
 
-    // Enum 인자를 담는 필드 생성
+    /** 메뉴와 노래 목록에서 사용자에게 보여줄 장르명이다. */
     private final String displayName;
 
-    // 장르 생성자
     Genre(String displayName) {
         this.displayName = displayName;
     }
 
-    // 장르 Getter
+    /** 장르의 화면 표시명을 반환한다. */
     public String getDisplayName() {
         return displayName;
     }
